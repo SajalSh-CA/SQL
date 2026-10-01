@@ -7,17 +7,46 @@ WHERE
     -- Condition 2: Unpaid with no override code
     invoice_status = 'Unpaid' AND override_code IS NULL;
 
---
+----
 
 SELECT product_id, product_name
 FROM inventory
 WHERE stock_quantity = 0 AND backorder_allowed = 'No'
    OR stock_quantity < 5 AND category = 'Electronics';
 
---
+----
 
 SELECT product_id, item_name
 FROM warehouse_inventory
 WHERE department = 'Electronics' AND stock_quantity <10
   OR  department = 'Apparel'  AND supplier_status = 'Delayed';
+
+----
+
+SELECT employee_id, employee_name
+FROM employee_payroll
+WHERE department = 'Engineering' AND overtime_hours >10
+  OR   department = 'Sales' AND hourly_rate >30.00
+  OR  contract_type = 'Contractor' AND overtime_hour >5;
+
+----
+
+SELECT account_id, company_name
+FROM client_accounts
+WHERE account_status = 'Active' AND monthly_spend > 10000.00 AND industry <> 'Tech'
+   OR account_status <> 'Suspended' AND specialized_industry IS NOT NULL;
+
+----
+
+SELECT account_id, company_name
+FROM clint_accounts
+WHERE account_status = 'Active' AND monthly_spend >10000.00 AND NOT industry = "Tech'
+OR account_status IS NOT 'Suspended'  AND specialized_industry IS NOT NULL;
+
+----
+
+SELECT customer_id, customer_name
+FROM marketing_campaigns
+WHERE subscription_tier = 'Premium' AND total_purchases = 0 AND unsubscribed_flag <> 'Yes'
+   OR total_purchases > 10 AND last_promo_code IS NULL;
 
