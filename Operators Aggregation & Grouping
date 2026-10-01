@@ -1,0 +1,149 @@
+SELECT order_id, customer_id
+FROM orders
+WHERE shipping_country IN ('UK', 'France', 'Germany')
+
+  AND order_date BETWEEN '2025-11-01' AND '2025-12-31' AND total_amount > 500
+       OR
+       promo_code LIKE 'WINTER%'
+
+----
+
+SELECT order_id, customer_id
+FROM orders
+WHERE total_amount >999 AND status <> ('Delivered' OR 'Cancelled')
+                      AND shipping_country <> ('USA' OR 'Canada');
+
+----
+
+SELECT order_id, customer_id
+FROM orders
+WHERE total_amount >= 1000
+  AND status NOT IN ('Delivered', 'Cancelled')
+  AND shipping_country NOT IN ('USA', 'Canada');
+
+----
+
+SELECT order_id, customer_id
+FROM orders
+WHERE total_amount >= 1000
+  AND (status <> 'Delivered' AND status <> 'Cancelled')
+  AND (shipping_country <> 'USA' AND shipping_country <> 'Canada');
+
+
+----
+
+
+SELECT vehicle_id
+FROM vehicles
+WHERE type NOT IN ('EV', 'Truck')
+    AND (
+         (price NOT BETWEEN 2000 AND 4000 AND manufacture_year >2022)
+          OR last_service_date IS NULL;
+          );
+
+----
+
+SELECT title
+FROM movies
+WHERE rating >8.0
+            AND is_premium = FALSE
+            AND ( release_year <2000
+             OR genre = 'Sci-Fi' OR  genre = 'Action'
+                );
+SELECT title
+FROM movies
+WHERE rating >8.0
+              AND is_premium = FALSE
+              AND ( release_year <2000 OR genre IN ('Sci-Fi', 'Action')
+                );
+
+----
+
+SELECT username
+FROM users
+WHERE is_admin = FALSE
+      AND failed_login_attempts >= 1
+        AND ( email LIKE '%ru' OR email LIKE  '%xyz'
+          OR last_login_date BETWEEN '2026-09-01' AND '2026-09-25'
+              AND failed_login_attempts >5
+                 );
+----
+
+
+SELECT transaction_id
+FROM transactions
+WHERE status IN ('Approved', 'Pending')
+     AND amount >=500
+        AND (
+
+              (account_type <> 'Savings' AND location IN ('Nigeria', 'Unknown', 'etc'))
+        OR    (merchant_name LIKE 'Crypto%' OR merchant_name LIKE '%Bet')
+        OR    (amount BETWEEN 5000 AND 10000 AND location NOT IN ('USA', 'Canada', 'UK'))
+
+            );
+
+----
+
+SELECT FirstName, LastName, Salary
+FROM employees
+WHERE department = 'Sales'
+ORDER BY salary ASC
+LIMIT 3;
+
+----
+
+SELECT item_name, cuisine, status, price
+FROM online_orders  -- Added the 's'
+WHERE cuisine = 'Asian'
+  AND status = 'Completed'
+ORDER BY price ASC
+LIMIT 2;
+
+
+----
+
+SELECT room_number, room_type, status
+FROM hotel_rooms
+WHERE status = 'Available'
+            AND (
+                 (room_type = 'Deluxe Suite')
+              OR (has_belcony = 'yes')
+                     )
+ORDER BY price_per_night DESC
+LIMIT 2;
+
+
+----
+
+SELECT *
+FROM inventory
+WHERE stock_count = 0
+      AND (department = 'Computers' OR department = 'Gaming')
+      AND (location = 'Warehouse A')
+ORDER BY price DESC
+LIMIT 3;
+
+
+----
+
+SELECT *
+FROM inventory
+WHERE stock_count = 0
+      AND (
+(department = 'Computers' OR department = 'Gaming')
+      AND (location = 'Warehouse A')
+)
+ORDER BY price DESC
+LIMIT 3;
+
+----
+
+
+SELECT
+    category,
+    SUM(order_amount) AS total_revenue
+FROM orders
+WHERE status = 'Completed'
+GROUP BY category
+ORDER BY total_revenue DESC
+LIMIT 3;
