@@ -1,0 +1,23 @@
+SELECT account_id, company_name
+FROM billing_ledger
+WHERE
+    -- Condition 1: Domestic with a high balance
+    region = 'Domestic' AND total_balance > 1000.00
+    OR
+    -- Condition 2: Unpaid with no override code
+    invoice_status = 'Unpaid' AND override_code IS NULL;
+
+--
+
+SELECT product_id, product_name
+FROM inventory
+WHERE stock_quantity = 0 AND backorder_allowed = 'No'
+   OR stock_quantity < 5 AND category = 'Electronics';
+
+--
+
+SELECT product_id, item_name
+FROM warehouse_inventory
+WHERE department = 'Electronics' AND stock_quantity <10
+  OR  department = 'Apparel'  AND supplier_status = 'Delayed';
+
