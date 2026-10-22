@@ -1,0 +1,65 @@
+The Problem: "The Empty Spaces" (Missing Data)
+The Problem: "The Clones" (Duplicate Data)
+The Problem: "The Typos & Messy Typing" (Text Formatting)
+The Problem: "The Imposters" (Wrong Data Types)
+final secret skill: Knowing how to combine them
+Text ➡️
+SELECT CAST(quantity_text AS INT) AS clean_quantity FROM Sales;
+Number ➡️ Decimal
+SELECT CAST(whole_price AS DECIMAL(10,2)) AS price_with_cents FROM Sales;
+ Number/Date ➡️ Text
+SELECT 'Order number: ' || CAST(order_id AS VARCHAR) AS order_label FROM Sales;
+Text ➡️ Date
+SELECT CAST(date_text AS DATE) AS clean_date FROM Sales;
+Professional Data Cleaning step by step:
+DUPLICATE > Typos & Text formatting > Empty Spaces > REPLACE > Data Type
+DISTINCT > TRIM > COALESCE > REPLACE > CAST
+
+
+
+
+-- 1. "THE TYPOS & MESSY TYPING" (Text Formatting)
+-- Weapon: TRIM()
+SELECT
+    TRIM(LOWER(email_address)) AS clean_email,
+    TRIM(UPPER(country_code))  AS clean_country
+FROM sales;
+
+ 
+-- 2. "THE EMPTY SPACES" (Missing Data)
+-- Weapon: COALESCE()
+ 
+SELECT
+    COALESCE(discount_amount, 0.00) AS clean_discount,
+    COALESCE(customer_name, 'Unknown') AS clean_name
+FROM sales;
+
+-- 3. "THE IMPOSTERS" (Wrong Data Types)
+-- Weapon: CAST()
+
+SELECT
+    CAST(revenue_text AS NUMERIC) AS mathematical_revenue,
+    CAST(signup_string AS DATE) AS actual_signup_date
+FROM sales;
+
+-- 4. "THE CLONES" (Duplicate Data)
+-- Weapon: DISTINCT
+
+SELECT
+    DISTINCT Order_id
+FROM sales;
+
+
+
+SELECT
+            DISTINCT Order_id,
+            TRIM(LOWER(Product_name)) AS New_product_name,
+            TRIM(UPPER(Frist_name)) AS New_First_name,
+            REPLACE(Phone_number, '_', ' ') AS New_number,
+            COALESCE(Product_price, 0.00) AS New_price,
+            COALESCE(Customer_Name, 'Unknown_name') AS New_name,
+            CAST(Tracking_id AS INT) AS New_tracking,
+            CAST(Address AS VARCHAR) AS New_address,
+            CAST(Print_date AS DATE) AS New_date,
+FROM sales;
+
