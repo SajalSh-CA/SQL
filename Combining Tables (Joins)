@@ -1,0 +1,26 @@
+The 4 Core Types of Joins
+INNER JOIN + LEFT JOIN + RIGHT JOIN + FULL JOIN
+
+INNER JOIN	Only rows that have a perfect match on both sides.
+LEFT JOIN	All rows from the first (left) table. Unmatched right side is NULL.
+RIGHT JOIN	All rows from the second (right) table. Unmatched left side is NULL.
+FULL JOIN	All rows from both tables, filling NULL wherever a match is missing.
+
+
+INNER JOIN (Strict Matches Only)
+
+SELECT
+artists.artist_name,
+songs.song_title
+FROM artists
+INNER JOIN songs
+    ON artists.artist_id = songs.creator_id;
+
+
+
+LEFT JOIN (Keep Everything on the Left)
+
+SELECT artists.artist_name, songs.song_title
+FROM artists
+LEFT JOIN songs  -- Keeps all artists, even if they have no songs
+    ON artists.artist_id = songs.creator_id;
