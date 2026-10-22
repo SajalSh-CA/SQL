@@ -1,0 +1,66 @@
+---ROW_NUMER
+SELECT
+    city,
+    property_name,
+    price,
+ROW_NUMBER() OVER(PARTITION BY city ORDER BY price ASC) AS total_number
+FROM listings;
+
+---RANK (Olympic Style) (1, 2, 2, 4)
+SELECT
+    city,
+    property_name,
+    price,
+RANK() OVER(PARTITION BY city ORDER BY price ASC) AS serial_number
+FROM listings;
+
+---DENSE_RANK (Smooth Style) (1, 2, 2, 3)
+SELECT
+    city,
+    property_name,
+    price,
+DENSE_RANK() OVER(PARTITION BY city ORDER BY price ASC) AS serial_number
+FROM listings;
+
+
+---SUM
+SELECT
+   category,
+   product_name,
+   price,
+SUM(price) OVER(PARTITION  BY category ORDER BY price ASC) AS total_price
+FROM amazon_products;
+
+
+---COUNT
+SELECT
+   category,
+   product_name,
+   price,
+COUNT(price) OVER(PARTITION  BY category ORDER BY price ASC) AS total_product_price
+FROM amazon_products;
+
+---AVG
+SELECT
+   category,
+   product_name,
+   price,
+AVG(price) OVER(PARTITION  BY category ORDER BY price DESC) AS average_price
+FROM amazon_products;
+
+---MAX
+SELECT
+    city,
+    property_name,
+    price,
+MAX(price) OVER(PARTITION BY city ORDER BY price) AS higest_price
+FROM listings;
+
+---MIN
+SELECT
+    city,
+    property_name,
+    price,
+MIN(price) OVER(PARTITION BY city ORDER BY price) AS lowest_price
+FROM listings;
+
