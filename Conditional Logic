@@ -1,0 +1,67 @@
+SELECT *,
+    CASE 
+        WHEN duration_minutes >= 5 THEN 'Epic'
+        WHEN duration_minutes >= 3 THEN 'Standard'
+        ELSE 'short'
+    END AS track_length_category
+FROM spotify_tracks;
+
+-- wildcard syntax
+SELECT *,
+    CASE 
+    WHEN release_year BETWEEN 1990 AND 1999 THEN '90s_Classic'
+    WHEN title LIKE  'The%' THEN 'Standard_Title'
+    ELSE 'Other'
+END AS movie_era
+FROM netflix_catalog;
+
+--
+
+SELECT *,
+   CASE 
+    WHEN distance_miles >30 AND rush_hour_status = 1 THEN 'Heavy_Burn'
+    WHEN status_code IN (4, 5) THEN 'Loss'
+    ELSE 'Standard'
+                      END AS trip_intensity
+FROM uber_rides;
+--
+SELECT *,
+    CASE
+       WHEN price IS NULL THEN 'Needs_Review'
+       WHEN review_rating = 5 AND price >500 THEN 'Premium_Elite'
+       ELSE 'Standard_Market'
+END AS pricing_startegy
+FROM airbnb_listings;
+--
+
+SELECT *,
+     CASE
+        WHEN account_status IS NULL THEN 'Incomplete_Profile'
+        WHEN transaction_count BETWEEN 100 AND 500 AND failed_logins >5 THEN 'Medium_Risk'
+        WHEN country IN ('Russia', 'Belarus', 'North Korea') OR withdrawal_amount >10000 THEN 'High_Risk_Monitoring'
+        ELSE 'Safe'
+END AS security_risk_tier 
+FROM paypal_accounts;
+
+___________________
+-- Core structure:
+
+CASE
+    WHEN condition_1 THEN result_1
+    WHEN condition_2 THEN result_2
+    ELSE safety_net_result
+END
+--
+SELECT
+    regular_column_1,
+    regular_column_2,
+    -- 👇 Your CASE code is implemented right here as a column
+    CASE
+        WHEN condition_1 THEN result_1
+        WHEN condition_2 THEN result_2
+        ELSE safety_net_result
+    END AS new_calculated_column_name -- 👈 Don't forget to name it!
+FROM
+    your_table_name
+WHERE
+    regular_filter_conditions;
